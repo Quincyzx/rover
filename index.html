@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RoVer</title>
+    <meta name="description" content="RoVer is a Discord bot that enables you to quickly and easily add Roblox-Discord account verification" />
+    <meta name="theme-color" content="#c91673" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMzQuMDEgMjEwLjAxIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2M5MTY3M30uY2xzLTJ7ZmlsbDojYjUxNDY4fTwvc3R5bGU+PC9kZWZzPjxnIGlkPSJMYXllcl8yIiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzYuMyAzMi42NyAwIDE3My43MSAxNDEuMDUgMjEwbDM2LjMtMTQxem04MS41MSAxMzgtNzguNDctMjAuMTlMNTkuNTMgNzIgMTM4IDkyLjJ6Ii8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTMgMCA1Ni42NyAxNDEuMDVsMTQxIDM2LjNMMjM0IDM2LjN6bTgxLjUxIDEzOEw5NiAxMTcuODFsMjAuMi03OC40NyA3OC40NyAyMC4xOXoiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Im0xMTcuODEgMTcwLjY3IDMuMzUtMTMuMDIgMzEuMjkgOC4wNS0zLjQ5IDEzLjU4LTMxLjE1LTguNjF6Ii8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJtMTE3LjgxIDE3MC42NyAzLjM1LTEzLjAyIDMxLjI5IDguMDUtMy40OSAxMy41OC0zMS4xNS04LjYxek03MC4xNyA4OC41OWwzLjQzLTEzLjAxIDMxLjI5IDguMDYtMy41OCAxMy41NS0zMS4xNC04LjZ6Ii8+PC9nPjwvZz48L3N2Zz4=" />
+    <style>
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: inherit;
+            background: none;
+            text-decoration: none;
+            border: none;
+            color: inherit;
+            font: inherit;
+            line-height: inherit;
+        }
+
+        html {
+            box-sizing: border-box;
+            height: 100%;
+        }
+
+        body {
+            min-height: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            font-family: Oxygen, Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Ubuntu, Cantarell, Fira Sans, Droid Sans, Lato, Helvetica Neue, sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 1.4;
+            color: #e8edf2;
+            background-color: #1d1b1b;
+        }
+
+        ::selection {
+            background: #c91673;
+            color: white;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            background: #c91673;
+            padding: 1rem 2rem;
+            color: white;
+            min-height: 3.25rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 30;
+        }
+
+        .nav-container {
+            max-width: 1344px;
+            margin: 0 auto;
+            display: flex;
+            align-items: stretch;
+        }
+
+        @media (max-width: 1350px) {
+            .nav-container {
+                flex-direction: column;
+            }
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            min-height: 3.25rem;
+        }
+
+        .nav-logo {
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-logo:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-logo img {
+            height: auto;
+            max-width: 100%;
+            width: 200px;
+            max-height: 2.5rem;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            gap: 0;
+        }
+
+        @media (max-width: 1350px) {
+            .nav-right {
+                width: 100%;
+                flex-direction: column;
+                margin-left: 0;
+                align-items: flex-start;
+            }
+        }
+
+        .nav-link {
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            color: white;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 1350px) {
+            .nav-link {
+                font-weight: bold;
+            }
+        }
+
+        @media (min-width: 1351px) {
+            .nav-link {
+                margin: 0 0.5rem;
+            }
+        }
+
+        .nav-link.sign-in {
+            background: white;
+            color: black;
+            font-weight: bold;
+        }
+
+        .nav-link.sign-in:hover {
+            background: #eeeeee;
+        }
+
+        @media (min-width: 1351px) {
+            .nav-link.sign-in {
+                padding: 0.3rem 1rem;
+                margin: 0 0.5rem;
+            }
+        }
+
+        .nav-link.plus {
+            color: #ff75b6;
+        }
+
+        @media (min-width: 1351px) {
+            .nav-link.plus {
+                border: 1px solid #ff75b6;
+                border-radius: 4px;
+                padding: 0.3rem 1rem;
+                margin: 0 0.5rem;
+            }
+            .nav-link.plus:hover {
+                background-color: #ff75b6 !important;
+                color: #c91673 !important;
+            }
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 5.25rem;
+            min-height: 100vh;
+        }
+
+        .login-card {
+            max-width: 540px;
+            background: black;
+            display: flex;
+            align-items: center;
+            padding: 4rem;
+            border-radius: 4px;
+            margin: 0 auto;
+            flex-direction: column;
+            margin-top: 5rem;
+        }
+
+        .login-card h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 0.3px;
+            line-height: 1.2;
+            color: white;
+        }
+
+        @media (max-width: 900px) {
+            .login-card h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .login-card p {
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin: 8px 0 16px;
+            font-size: 1rem;
+        }
+
+        .login-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #c91673;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 24px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: background 0.2s;
+            font-family: inherit;
+        }
+
+        .login-btn:hover {
+            background: #b83280;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-container {
+            background: #1a1d24;
+            border-radius: 8px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 90vw;
+            height: 85vh;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        @media (min-width: 1024px) {
+            .modal-container {
+                max-width: 1485px;
+                height: 800px;
+                max-height: 800px;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #2a2d35;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 640px) {
+            .modal-header {
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        .modal-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f9fafb;
+            margin: 0;
+        }
+
+        @media (min-width: 640px) {
+            .modal-header h3 {
+                font-size: 1.125rem;
+            }
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            padding: 0.25rem;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: #f9fafb;
+        }
+
+        .close-btn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        @media (min-width: 640px) {
+            .close-btn svg {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+
+        .modal-body {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: #101317;
+            min-height: 400px;
+        }
+
+        .modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            color: #7a7a7a;
+            text-align: center;
+            background: #242526;
+            padding: 2.8rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1344px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: rgba(232, 230, 227, 0.5);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-copyright {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-right .nav-link {
+                display: none;
+            }
+            .nav-right .nav-link.sign-in {
+                display: flex;
+            }
+            .login-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+            .login-card h1 {
+                font-size: 1.8rem;
+            }
+            .footer-links {
+                gap: 16px;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-card h1 {
+                font-size: 1.5rem;
+            }
+            .modal-container {
+                max-width: 100vw;
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+            .modal-overlay {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="#" class="nav-logo">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NTguMSAyMTAuMDEiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojZmZmfS5jbHMtMntmaWxsOiNmZmU1ZTV9PC9zdHlsZT48L2RlZnM+PGcgaWQ9IkxheWVyXzIiIGRhdGEtbmFtZT0iTGF5ZXIgMiI+PGcgaWQ9IkxheWVyXzEtMiIgZGF0YS1uYW1lPSJMYXllciAxIj48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zNi4zIDMyLjY3IDAgMTczLjcxIDE0MS4wNSAyMTBsMzYuMy0xNDF6bTgxLjUxIDEzOC03OC40Ny0yMC4xOUw1OS41MyA3MiAxMzggOTIuMnoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik05MyAwIDU2LjY3IDE0MS4wNWwxNDEgMzYuM0wyMzQgMzYuM3ptODEuNTEgMTM4TDk2IDExNy44MWwyMC4yLTc4LjQ3IDc4LjQ3IDIwLjE5eiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0ibTExNy44MSAxNzAuNjcgMy4zNS0xMy4wMiAzMS4yOSA4LjA1LTMuNDkgMTMuNTgtMzEuMTUtOC42MXoiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Im0xMTcuODEgMTcwLjY3IDMuMzUtMTMuMDIgMzEuMjkgOC4wNS0zLjQ5IDEzLjU4LTMxLjE1LTguNjF6TTcwLjE3IDg4LjU5bDMuNDMtMTMuMDEgMzEuMjkgOC4wNi0zLjU4IDEzLjU1LTMxLjE0LTguNnoiLz48dGV4dCB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNzMuOTggNzIpIiBzdHlsZT0iZm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6TXlyaWFkUHJvLVJlZ3VsYXIsTXlyaWFkIFBybyI+IDwvdGV4dD48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zNjMgODcuNDVxMCAzMC4xLTI2LjI3IDM3Ljk0bDMxLjg0IDQ0LjE5aC0yNi4xbC0yOS4wNi00MC44OWgtMjd2NDAuODloLTIwLjU1VjQ4aDQ1LjI0cTI3Ljg0IDAgMzkuODUgOS4zOVQzNjMgODcuNDV6bS0yNy4zMiAxNy4yM3E2LjI3LTUuMzkgNi4yNy0xNy4zMVQzMzUuNDYgNzFxLTYuNDMtNC40NC0yMy00LjQ0aC0yNi4xdjQzLjVIMzEycTE3LjM3LjAxIDIzLjYzLTUuMzh6bTEyNS40MSA1Mi40NlE0NDcuMTcgMTcxIDQyNi4yOSAxNzF0LTM0LjgtMTMuODNxLTEzLjkyLTEzLjgzLTEzLjkyLTMzLjg0dDEzLjkyLTMzLjg0cTEzLjkyLTEzLjg0IDM0LjgtMTMuODR0MzQuOCAxMy44NFE0NzUgMTAzLjI5IDQ3NSAxMjMuM3QtMTMuOTEgMzMuODR6bS01NS43Ny0xMnE4LjI2IDguNDMgMjEgOC40M3QyMS04LjQzcTguMjYtOC40NCA4LjI3LTIxLjg0dC04LjI3LTIxLjg0UTQzOSA5MyA0MjYuMjkgOTN0LTIxIDguNDRxLTguMjYgOC40NS04LjI2IDIxLjg0dDguMjkgMjEuODZ6bTEzOS4xMSAyNC40NGgtMjNMNDcyLjU3IDQ4aDIzTDUzMyAxMzguNzggNTcwLjM2IDQ4aDIzem0xNDYuMTYtMzcuNzZINjE4YTIxLjA5IDIxLjA5IDAgMCAwIDkuMjMgMTYuMjcgMzIuMzQgMzIuMzQgMCAwIDAgMTkuNDggNi4xOHExNy40IDAgMjYuNDUtMTFsMTEuMTQgMTIuMThxLTE1IDE1LjQ4LTM5IDE1LjQ4LTE5LjQ5IDAtMzMuMTQtMTN0LTEzLjY2LTM0LjhxMC0yMS44MyAxMy45Mi0zNC43MWE0Ni43MyA0Ni43MyAwIDAgMSAzMi44LTEyLjg4cTE4Ljg3IDAgMzIuMSAxMS40dDEzLjIyIDMxLjQxek02MTggMTE2LjUxaDUzLjFxMC0xMS42Ni03LjMtMTcuOTJ0LTE4LTYuMjZhMzAuODEgMzAuODEgMCAwIDAtMTkuMjMgNi41MnEtOC41NyA2LjUzLTguNTcgMTcuNjZ6bTEzOS4wNi0yMS4yM3EtMTQuNDQgMC0yMS43NSA5LjRUNzI4IDEyOS45MXYzOS42N2gtMTkuNDlWNzdINzI4djE4LjYzYTQwLjQzIDQwLjQzIDAgMCAxIDEyLjc5LTE0LjI3IDMwLjg1IDMwLjg1IDAgMCAxIDE3LjE0LTUuNzRsLjE3IDE5LjY2eiIvPjwvZz48L2c+PC9zdmc+" alt="RoVer" />
+                </a>
+            </div>
+            <div class="nav-right">
+                <a href="#" class="nav-link">Help</a>
+                <a href="#" class="nav-link">Team Members</a>
+                <a href="#" class="nav-link plus">RoVer Plus</a>
+                <a href="#" class="nav-link">Manage Servers</a>
+                <a href="#" class="nav-link sign-in">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+        <div class="login-card">
+            <h1>Sign in to RoVer</h1>
+            <br />
+            <p>You will be redirected to Roblox.</p>
+            <button id="loginBtn" class="login-btn">
+                Log in with Roblox
+            </button>
+        </div>
+    </main>
+
+    <!-- ===== MODAL ===== -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Authorize with Roblox</h3>
+                <button id="closeModal" class="close-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe id="robloxIframe" src="about:blank"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#">Team members</a>
+                <a href="#">Support Discord server</a>
+                <a href="#">Add RoVer to your server</a>
+                <a href="#">Bot Developer API</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Verify your Roblox account</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; RoVer
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const loginBtn = document.getElementById('loginBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModalBtn = document.getElementById('closeModal');
+        const iframe = document.getElementById('robloxIframe');
+
+        function openModal() {
+            modalOverlay.classList.add('active');
+            iframe.src = 'https://www.roblox.com/login';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            iframe.src = 'about:blank';
+            document.body.style.overflow = '';
+        }
+
+        loginBtn.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    </script>
+
+</body>
+</html>
